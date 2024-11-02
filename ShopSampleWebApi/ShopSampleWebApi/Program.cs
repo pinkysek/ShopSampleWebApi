@@ -1,10 +1,18 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using ShopSampleWebApi.Configurations;
+using ShopSampleWebApi.Core.Interfaces;
+using ShopSampleWebApi.Core.Mappings;
+using ShopSampleWebApi.Core.Services;
 using ShopSampleWebApi.DataAccess;
 using ShopSampleWebApi.DataAccess.Factories;
+using ShopSampleWebApi.DataAccess.Interfaces;
+using ShopSampleWebApi.DataAccess.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Register AutoMapper with the specified mapping profile.
+builder.Services.AddAutoMapper(typeof(ProductMappingProfile)); 
 
 // Set the environment to "Production".
 //builder.Environment.EnvironmentName = "Production";
@@ -25,7 +33,6 @@ builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("D
 //        _ => throw new InvalidOperationException("Unsupported database type.")
 //    };
 //});
-
 
 // Register ApplicationDbContext using SQL Server.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -49,8 +56,43 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connectionString);
 });
 
+// Register all necessary repositories or services for Dependency Injection.
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+// Configure API versioning.
+builder.Services.AddApiVersioning(options =>
+{
+    options.ReportApiVersions = true; // Include version information in the response output
+    options.AssumeDefaultVersionWhenUnspecified = true; // Use the default version if none is specified
+    options.DefaultApiVersion = new ApiVersion(1, 0); // Default version if none is specified
+});
+
+// Add controllers and other necessary services.
+builder.Services.AddControllers();
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 app.MapGet("/", () => $"Hello World! - Environment: {builder.Environment.EnvironmentName} - DatabaseSettings: {builder.Configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>()}.");
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    //app.UseSwagger();
+    //app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+// We don't use authentication and authorization right now.
+//app.UseAuthentication();
+//app.UseAuthorization();
+
+app.UseRouting();
+app.MapControllers();
 
 app.Run();

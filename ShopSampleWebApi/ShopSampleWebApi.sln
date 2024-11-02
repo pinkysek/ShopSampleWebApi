@@ -3,17 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSampleWebApi", "ShopSampleWebApi\ShopSampleWebApi.csproj", "{BA21F530-B29E-48A0-A277-C15FA60494DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopSampleWebApi", "ShopSampleWebApi\ShopSampleWebApi.csproj", "{BA21F530-B29E-48A0-A277-C15FA60494DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSampleWebApi.DataAccess", "ShopSampleWebApi.DataAccess\ShopSampleWebApi.DataAccess.csproj", "{0F2643EF-5CCB-428A-9C0B-B1E003C24677}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopSampleWebApi.DataAccess", "ShopSampleWebApi.DataAccess\ShopSampleWebApi.DataAccess.csproj", "{0F2643EF-5CCB-428A-9C0B-B1E003C24677}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F75954CF-0513-4494-AE68-0A04D6828BE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSampleWebApi.DataAccess.Tests", "Tests\ShopSampleWebApi.DataAccess.Tests\ShopSampleWebApi.DataAccess.Tests.csproj", "{88C7BFA9-EC7C-4171-956F-BA5D525028FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopSampleWebApi.DataAccess.Tests", "Tests\ShopSampleWebApi.DataAccess.Tests\ShopSampleWebApi.DataAccess.Tests.csproj", "{88C7BFA9-EC7C-4171-956F-BA5D525028FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSampleWebApi.Common", "ShopSampleWebApi.Common\ShopSampleWebApi.Common.csproj", "{90713BD3-BF14-4E94-BAA9-0357C5D4EC49}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSampleWebApi.Core", "ShopSampleWebApi.Core\ShopSampleWebApi.Core.csproj", "{BF02C405-2938-42EF-AD9F-5A4EBB583ED7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopSampleWebApi.Core", "ShopSampleWebApi.Core\ShopSampleWebApi.Core.csproj", "{BF02C405-2938-42EF-AD9F-5A4EBB583ED7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{88C7BFA9-EC7C-4171-956F-BA5D525028FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88C7BFA9-EC7C-4171-956F-BA5D525028FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88C7BFA9-EC7C-4171-956F-BA5D525028FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90713BD3-BF14-4E94-BAA9-0357C5D4EC49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90713BD3-BF14-4E94-BAA9-0357C5D4EC49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90713BD3-BF14-4E94-BAA9-0357C5D4EC49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90713BD3-BF14-4E94-BAA9-0357C5D4EC49}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF02C405-2938-42EF-AD9F-5A4EBB583ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF02C405-2938-42EF-AD9F-5A4EBB583ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF02C405-2938-42EF-AD9F-5A4EBB583ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
