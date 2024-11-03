@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopSampleWebApi.DataAccess
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopSampleWebApi.Core", "ShopSampleWebApi.Core\ShopSampleWebApi.Core.csproj", "{BF02C405-2938-42EF-AD9F-5A4EBB583ED7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopSampleWebApi.WebApi.Tests", "Tests\ShopSampleWebApi.WebApi.Tests\ShopSampleWebApi.WebApi.Tests.csproj", "{C692EFB1-F1D2-4E7D-8DA2-36DBA7C63501}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,12 +37,17 @@ Global
 		{BF02C405-2938-42EF-AD9F-5A4EBB583ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF02C405-2938-42EF-AD9F-5A4EBB583ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF02C405-2938-42EF-AD9F-5A4EBB583ED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C692EFB1-F1D2-4E7D-8DA2-36DBA7C63501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C692EFB1-F1D2-4E7D-8DA2-36DBA7C63501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C692EFB1-F1D2-4E7D-8DA2-36DBA7C63501}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C692EFB1-F1D2-4E7D-8DA2-36DBA7C63501}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{88C7BFA9-EC7C-4171-956F-BA5D525028FA} = {F75954CF-0513-4494-AE68-0A04D6828BE5}
+		{C692EFB1-F1D2-4E7D-8DA2-36DBA7C63501} = {F75954CF-0513-4494-AE68-0A04D6828BE5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7F5D4F17-9018-4683-B4C6-2359DA2500CC}
