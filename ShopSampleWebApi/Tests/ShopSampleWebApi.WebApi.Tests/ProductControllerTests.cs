@@ -9,6 +9,7 @@ using ShopSampleWebApi.DataAccess;
 using ShopSampleWebApi.DataAccess.Factories;
 using ShopSampleWebApi.DataAccess.Repositories;
 using ShopSampleWebApi.Helpers;
+using ShopSampleWebApi.WebApi.Tests.Helpers;
 using Xunit;
 
 namespace ShopSampleWebApi.WebApi.Tests
@@ -18,6 +19,7 @@ namespace ShopSampleWebApi.WebApi.Tests
         private readonly ApplicationDbContext _context;
         private readonly ProductRepository _productRepository;
         private readonly Mapper _mapper;
+        private readonly TestLogger<ProductService> _testLogger;
         private readonly ProductService _productService;
         private readonly ProductController _productController;
 
@@ -33,7 +35,8 @@ namespace ShopSampleWebApi.WebApi.Tests
             _context = DbContextFactory.CreateDbContext(DatabaseType.InMemory);
             _productRepository = new ProductRepository(_context);
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<ProductMappingProfile>()));
-            _productService = new ProductService(_productRepository, _mapper);
+            _testLogger = new TestLogger<ProductService>();
+            _productService = new ProductService(_productRepository, _mapper, _testLogger);
             _productController = new ProductController(_productService);
         }
 

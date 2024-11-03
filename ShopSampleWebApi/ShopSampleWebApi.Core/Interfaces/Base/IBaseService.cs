@@ -14,7 +14,7 @@ namespace ShopSampleWebApi.Core.Interfaces.Base
         /// </summary>
         /// <param name="id">The identifier of the entity.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the DTO of the entity.</returns>
-        Task<TDto> GetByIdAsync(long id);
+        Task<TDto?> GetByIdAsync(long id);
 
         /// <summary>
         /// Gets all entities.
