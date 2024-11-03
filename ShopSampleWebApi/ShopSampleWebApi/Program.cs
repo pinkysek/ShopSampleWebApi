@@ -9,6 +9,7 @@ using ShopSampleWebApi.DataAccess;
 using ShopSampleWebApi.DataAccess.Factories;
 using ShopSampleWebApi.DataAccess.Interfaces;
 using ShopSampleWebApi.DataAccess.Repositories;
+using ShopSampleWebApi.Filters;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -90,17 +91,24 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Product API V1",
-        Description = "API for product management - Version 1"
+        Title = "Product API v1",
+        Description = "API for product management (version 1.0)"
     });
     options.SwaggerDoc("v2", new OpenApiInfo
     {
         Version = "v2",
-        Title = "Product API V2",
-        Description = "API for product management - Version 2"
+        Title = "Product API v2",
+        Description = "API for product management (version 2.0)"
     });
 
-    options.EnableAnnotations(); // Enable annotations  
+    // Enable annotations.
+    options.EnableAnnotations();
+
+    // Register filter to convert all paths to lowercase.
+    options.DocumentFilter<LowercaseDocumentFilter>();
+
+    // Register filter to add examples
+    options.SchemaFilter<ExampleSchemaFilter>();
 
     // Load XML comments if XML generation is enabled.  
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -116,8 +124,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Product API V1");
-        c.SwaggerEndpoint("/swagger/v2/swagger.json", "Product API V2");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Product API v1");
+        c.SwaggerEndpoint("/swagger/v2/swagger.json", "Product API v2");
         c.RoutePrefix = "swagger"; 
     });
 }
@@ -126,9 +134,9 @@ app.UseHttpsRedirection();
 
 // We don't use authentication and authorization right now.
 //app.UseAuthentication();
-app.UseAuthorization();
+//app.UseAuthorization();
 
-//app.UseRouting();
+app.UseRouting();
 app.MapControllers();
 
 app.Run();
