@@ -15,35 +15,26 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Register AutoMapper with the specified mapping profile.
-builder.Services.AddAutoMapper(typeof(ProductMappingProfile)); 
+builder.Services.AddAutoMapper(typeof(ProductMappingProfile));
 
 // Set the environment to "Production".
 //builder.Environment.EnvironmentName = "Production";
 
 // Load appsettings.json and then overwrite values from appsettings.{Environment}.json based on the ASPNETCORE_ENVIRONMENT setting.
 builder.Configuration
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+   .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
+// Configure DatabaseSettings from configuration.
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));
-//builder.Services.AddSingleton(q =>
-//{
-//    var databaseSettings = q.GetRequiredService<IOptions<DatabaseSettings>>().Value;
-//    return databaseSettings.DatabaseType switch
-//    {
-//        "InMemory" => DbContextFactory.CreateDbContext(DatabaseType.InMemory),
-//        "Real" => DbContextFactory.CreateDbContext(DatabaseType.Real),
-//        _ => throw new InvalidOperationException("Unsupported database type.")
-//    };
-//});
 
 // Register ApplicationDbContext using SQL Server.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    // Load connection string from configuration.
+    // Load connection string from configuration.  
     var databaseSettings = builder.Configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>();
 
-    // Determine the database type from settings.
+    // Determine the database type from settings.  
     var type = databaseSettings?.DatabaseType switch
     {
         "InMemory" => DatabaseType.InMemory,
@@ -84,10 +75,10 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.SubstituteApiVersionInUrl = true; // Substitute API version in URL.
 });
 
-// Configure Swagger with support for multiple versions  
+// Configure Swagger with support for multiple versions.
 builder.Services.AddSwaggerGen(options =>
 {
-    // Add documentation for each version.  
+    // Add documentation for each version.
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
@@ -107,26 +98,28 @@ builder.Services.AddSwaggerGen(options =>
     // Register filter to convert all paths to lowercase.
     options.DocumentFilter<LowercaseDocumentFilter>();
 
-    // Register filter to add examples
+    // Register filter to add examples.
     options.SchemaFilter<ExampleSchemaFilter>();
 
-    // Load XML comments if XML generation is enabled.  
+    // Load XML comments if XML generation is enabled.
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    options.IncludeXmlComments(xmlPath); // Include XML comments.  
+    options.IncludeXmlComments(xmlPath); // Include XML comments.
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    // Initialize the database outside the service pipeline (only for development and InMemory database).
+    DatabaseInitializer.InitializeDatabase(app.Services);
+
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Product API v1");
         c.SwaggerEndpoint("/swagger/v2/swagger.json", "Product API v2");
-        c.RoutePrefix = "swagger"; 
+        c.RoutePrefix = "swagger";
     });
 }
 

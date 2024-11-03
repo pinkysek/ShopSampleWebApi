@@ -3,6 +3,9 @@ using ShopSampleWebApi.Configurations;
 
 namespace ShopSampleWebApi.Helpers
 {
+    /// <summary>
+    /// Provides helper methods for retrieving configuration settings.
+    /// </summary>
     public static class ConfigurationHelper
     {
         /// <summary>
