@@ -40,25 +40,34 @@ namespace ShopSampleWebApi.DataAccess.Tests
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Tests the AddAsync method of the ProductRepository class.
+        /// This test verifies that a product can be successfully added to the database.
+        /// </summary>
         [Fact]
         public async Task AddAsync_ShouldAddProduct()
         {
+            // Arrange: Create a new product instance with test data.
             var product = new Product { Name = "TestProduct", ImgUri = "https://picsum.photos/g/200/200/?image=123", Price = 1000 };
 
+            // Act: Add the product to the repository and save changes.
             await _productRepository.AddAsync(product);
 
+            // Act: Retrieve the added product from the database.
             var addedProduct = await _context.Products.FindAsync(product.Id);
 
-            // Assert that the added product is not null.
-            Assert.NotNull(addedProduct);
-            // Assert that the name of the added product is "TestProduct".
-            Assert.Equal("TestProduct", addedProduct.Name);
-            // Assert that the image URI of the added product is not null.
-            Assert.NotNull(addedProduct.ImgUri);
-            // Assert that the price of the added product is 1000.
-            Assert.Equal(1000, addedProduct.Price);
+            // Assert: Verify that the product was added successfully.
+            Assert.NotNull(addedProduct); // The added product should not be null.
+            Assert.Equal("TestProduct", addedProduct.Name); // The name should match the test data.
+            Assert.NotNull(addedProduct.ImgUri); // The image URI should not be null.
+            Assert.Equal(1000, addedProduct.Price); // The price should match the test data.
         }
 
+
+        /// <summary>
+        /// Tests the GetAllAsync method of the ProductRepository class.
+        /// This test verifies that all products can be successfully retrieved from the database.
+        /// </summary>
         [Fact]
         public async Task GetAllAsync_ShouldReturnAllProducts()
         {
@@ -68,6 +77,10 @@ namespace ShopSampleWebApi.DataAccess.Tests
             Assert.Equal(100, ((List<Product>)products).Count);
         }
 
+        /// <summary>
+        /// Tests the GetAllAsync method of the ProductRepository class with paging.
+        /// This test verifies that the method returns the correct paged results.
+        /// </summary>
         [Fact]
         public async Task GetAllAsync_WithPaging_ShouldReturnPagedResults()
         {
