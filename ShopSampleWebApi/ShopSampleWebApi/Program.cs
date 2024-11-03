@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using ShopSampleWebApi.Configurations;
 using ShopSampleWebApi.Core.Interfaces;
 using ShopSampleWebApi.Core.Mappings;
@@ -8,6 +9,7 @@ using ShopSampleWebApi.DataAccess;
 using ShopSampleWebApi.DataAccess.Factories;
 using ShopSampleWebApi.DataAccess.Interfaces;
 using ShopSampleWebApi.DataAccess.Repositories;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,39 +62,73 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
-// Configure API versioning.
-builder.Services.AddApiVersioning(options =>
-{
-    options.ReportApiVersions = true; // Include version information in the response output
-    options.AssumeDefaultVersionWhenUnspecified = true; // Use the default version if none is specified
-    options.DefaultApiVersion = new ApiVersion(1, 0); // Default version if none is specified
-});
-
 // Add controllers and other necessary services.
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
+
+// Configure API versioning.
+builder.Services.AddApiVersioning(options =>
+{
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+});
+
+// Configure versioned support for Swagger.
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV"; // Group format v1, v2.
+    options.SubstituteApiVersionInUrl = true; // Substitute API version in URL.
+});
+
+// Configure Swagger with support for multiple versions  
+builder.Services.AddSwaggerGen(options =>
+{
+    // Add documentation for each version.  
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Product API V1",
+        Description = "API for product management - Version 1"
+    });
+    options.SwaggerDoc("v2", new OpenApiInfo
+    {
+        Version = "v2",
+        Title = "Product API V2",
+        Description = "API for product management - Version 2"
+    });
+
+    options.EnableAnnotations(); // Enable annotations  
+
+    // Load XML comments if XML generation is enabled.  
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath); // Include XML comments.  
+});
 
 var app = builder.Build();
-
-app.MapGet("/", () => $"Hello World! - Environment: {builder.Environment.EnvironmentName} - DatabaseSettings: {builder.Configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>()}.");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //app.UseSwagger();
-    //app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Product API V1");
+        c.SwaggerEndpoint("/swagger/v2/swagger.json", "Product API V2");
+        c.RoutePrefix = "swagger"; 
+    });
 }
 
 app.UseHttpsRedirection();
 
 // We don't use authentication and authorization right now.
 //app.UseAuthentication();
-//app.UseAuthorization();
+app.UseAuthorization();
 
-app.UseRouting();
+//app.UseRouting();
 app.MapControllers();
 
 app.Run();

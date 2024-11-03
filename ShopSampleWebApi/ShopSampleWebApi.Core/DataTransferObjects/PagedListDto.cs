@@ -1,4 +1,5 @@
 ﻿using ShopSampleWebApi.DataAccess.Helpers;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ShopSampleWebApi.Core.DataTransferObjects
 {
@@ -6,41 +7,49 @@ namespace ShopSampleWebApi.Core.DataTransferObjects
     /// Represents a paginated list of items for data transfer.
     /// </summary>
     /// <typeparam name="T">The type of items in the list.</typeparam>
+    [SwaggerSchema(Description = "Represents a paginated list of items for data transfer.")]
     public class PagedListDto<T>
     {
         /// <summary>
         /// Gets or sets the items in the current page.
         /// </summary>
+        [SwaggerSchema(Description = "The items in the current page.")]
         public IEnumerable<T> Items { get; set; }
 
         /// <summary>
         /// Gets the current page number.
         /// </summary>
+        [SwaggerSchema(Description = "The current page number.")]
         public int PageNumber { get; set; }
 
         /// <summary>
         /// Gets the number of items per page.
         /// </summary>
+        [SwaggerSchema(Description = "The number of items per page.")]
         public int PageSize { get; set; }
 
         /// <summary>
         /// Gets the total number of items.
         /// </summary>
+        [SwaggerSchema(Description = "The total number of items.")]
         public int TotalCount { get; set; }
 
         /// <summary>
         /// Gets the total number of pages.
         /// </summary>
+        [SwaggerSchema(Description = "The total number of pages.")]
         public int TotalPages { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether there is a previous page.
         /// </summary>
+        [SwaggerSchema(Description = "Indicates whether there is a previous page.")]
         public bool HasPrevious { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether there is a next page.
         /// </summary>
+        [SwaggerSchema(Description = "Indicates whether there is a next page.")]
         public bool HasNext { get; set; }
 
         /// <summary>
