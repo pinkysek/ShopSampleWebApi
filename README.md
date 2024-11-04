@@ -74,7 +74,7 @@ The unit tests use the same configuration as the application, allowing you to se
    dotnet run
    ```
 
-6. **Access Swagger** at [http://localhost:5000/swagger](http://localhost:5000/swagger).
+6. **Access Swagger** at [http://localhost:5252/swagger](http://localhost:5252/swagger).
 
 ## Running Tests
 
