@@ -48,16 +48,17 @@ namespace ShopSampleWebApi.DataAccess
             modelBuilder.Entity<Product>().HasData(GenerateProductsSeedData(100));
         }
 
-        /// <summary>
-        /// Saves all changes made in this context to the database.
-        /// </summary>
-        /// <returns>The number of state entries written to the database.</returns>
+        // This method overrides the SaveChanges method of the DbContext class.
+        // It ensures that the CreatedOn and UpdatedOn properties are set correctly
+        // for entities that inherit from BaseEntity before saving changes to the database.
         public override int SaveChanges()
         {
+            // Get entries that are being added or modified and are of type BaseEntity.
             var entries = ChangeTracker
                 .Entries()
                 .Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));
 
+            // Iterate through the entries and set the CreatedOn and UpdatedOn properties.
             foreach (var entityEntry in entries)
             {
                 if (entityEntry.State == EntityState.Added)
@@ -67,7 +68,32 @@ namespace ShopSampleWebApi.DataAccess
                     ((BaseEntity)entityEntry.Entity).UpdatedOn = DateTime.Now;
             }
 
+            // Call the base class's SaveChanges method to save the changes to the database.
             return base.SaveChanges();
+        }
+
+        // This method overrides the SaveChangesAsync method of the DbContext class.
+        // It ensures that the CreatedOn and UpdatedOn properties are set correctly
+        // for entities that inherit from BaseEntity before saving changes to the database.
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            // Get entries that are being added or modified and are of type BaseEntity.
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is BaseEntity && (e.State == EntityState.Added || e.State == EntityState.Modified));
+
+            // Iterate through the entries and set the CreatedOn and UpdatedOn properties.
+            foreach (var entityEntry in entries)
+            {
+                if (entityEntry.State == EntityState.Added)
+                    ((BaseEntity)entityEntry.Entity).CreatedOn = DateTime.Now;
+
+                if (entityEntry.State == EntityState.Modified)
+                    ((BaseEntity)entityEntry.Entity).UpdatedOn = DateTime.Now;
+            }
+
+            // Call the base class's SaveChangesAsync method to save the changes to the database.
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
         /// <summary>

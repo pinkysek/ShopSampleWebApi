@@ -3,7 +3,7 @@
 namespace ShopSampleWebApi.DataAccess.Models.Base
 {
     // BaseEntity is an abstract class that serves as a base for other entities.
-    // It includes common properties like Id, CreatedOn, UpdatedOn, and DeletedOn.
+    // It includes common properties like Id, CreatedOn and UpdatedOn.
     public abstract class BaseEntity
     {
         [Key]
@@ -12,7 +12,5 @@ namespace ShopSampleWebApi.DataAccess.Models.Base
         public DateTime CreatedOn { get; set; }  // Record creation date.
 
         public DateTime? UpdatedOn { get; set; }  // Last update date (optional).
-
-        public DateTime? DeletedOn { get; set; }  // Deletion date (optional).
     }
 }
