@@ -21,7 +21,7 @@ namespace ShopSampleWebApi.Core.DataTransferObjects
         /// </summary>
         [Required(ErrorMessage = "Name is required.")]
         [SwaggerSchema("The name of the product.")]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the image URI of the product.
@@ -29,7 +29,7 @@ namespace ShopSampleWebApi.Core.DataTransferObjects
         [Required(ErrorMessage = "Image URI is required.")]
         [Url(ErrorMessage = "Please enter a valid URL.")]
         [SwaggerSchema("The image URI of the product.")]
-        public string ImgUri { get; set; }
+        public required string ImgUri { get; set; }
 
         /// <summary>
         /// Gets or sets the price of the product.

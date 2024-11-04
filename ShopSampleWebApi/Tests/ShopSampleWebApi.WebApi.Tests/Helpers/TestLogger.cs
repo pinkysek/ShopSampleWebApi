@@ -19,7 +19,16 @@ namespace ShopSampleWebApi.WebApi.Tests.Helpers
         /// <typeparam name="TState">The type of the state.</typeparam>
         /// <param name="state">The identifier for the scope.</param>
         /// <returns>A disposable object that ends the logical operation scope on dispose.</returns>
-        public IDisposable? BeginScope<TState>(TState state) => null;
+        public IDisposable? BeginScope<TState>(TState state) where TState : notnull
+        {
+            // Implementation can be empty or return null as the TestLogger may not need actual scoping behavior
+            return null;
+        }
+
+        IDisposable? ILogger.BeginScope<TState>(TState state)
+        {
+            return BeginScope(state);
+        }
 
         /// <summary>
         /// Checks if the given log level is enabled.

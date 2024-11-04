@@ -186,7 +186,7 @@ namespace ShopSampleWebApi.WebApi.Tests
             // Verify that the update is reflected in the database.
             var updatedProduct = await _productRepository.GetByIdAsync(1);
             // Assert that the product description is updated to "Updated Description".
-            Assert.Equal("Updated Description", updatedProduct.Description);
+            Assert.Equal("Updated Description", updatedProduct?.Description);
         }
     }
 }

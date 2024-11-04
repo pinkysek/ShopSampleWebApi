@@ -13,13 +13,13 @@ namespace ShopSampleWebApi.DataAccess.Models
         /// Gets or sets the name of the product.
         /// </summary>
         [Required]
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the image URI of the product.
         /// </summary>
         [Required]
-        public string ImgUri { get; set; }
+        public required string ImgUri { get; set; }
 
         /// <summary>
         /// Gets or sets the price of the product.
