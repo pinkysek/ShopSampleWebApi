@@ -17,9 +17,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Register AutoMapper with the specified mapping profile.
 builder.Services.AddAutoMapper(typeof(ProductMappingProfile));
 
-// Set the environment to "Production".
-//builder.Environment.EnvironmentName = "Production";
-
 // Load appsettings.json and then overwrite values from appsettings.{Environment}.json based on the ASPNETCORE_ENVIRONMENT setting.
 builder.Configuration
    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
