@@ -55,7 +55,7 @@ The unit tests use the same configuration as the application, allowing you to se
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-repo/ShopSampleWebApi.git
+   git clone https://github.com/pinkysek/ShopSampleWebApi.git
    ```
 
 2. **Open in Visual Studio** or your preferred IDE.
